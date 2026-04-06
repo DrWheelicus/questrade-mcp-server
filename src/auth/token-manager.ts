@@ -116,7 +116,6 @@ export class TokenManager {
       const diagnostics = [
         `Token refresh failed (${response.status}${response.statusText ? ` ${response.statusText}` : ""})`,
         `Questrade environment=${this.config.environment}`,
-        `OAuth host=${this.oauthBaseUrl}`,
         `response=${bodyPreview}`,
       ];
 
