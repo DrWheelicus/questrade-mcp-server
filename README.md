@@ -22,6 +22,8 @@ with fewer round-trips.
 - [CI/CD](#cicd)
 - [Security](#security)
 - [Contributing](#contributing)
+- [Security Policy](#security-policy)
+- [Release Process](#release-process)
 - [License](#license)
 
 ## Quick Start
@@ -211,7 +213,17 @@ docker run -p 3100:3100 -e QUESTRADE_REFRESH_TOKEN=<your-token> questrade-mcp
 
 ## Contributing
 
-Issues and pull requests are welcome. Please include clear reproduction steps for bugs and tests for behavioral changes.
+See `CONTRIBUTING.md` for contributor setup, quality checks, and PR process.
+
+GitHub issue and PR templates are provided in `.github/` to keep reports and reviews consistent.
+
+## Security Policy
+
+See `SECURITY.md` for how to report vulnerabilities privately.
+
+## Release Process
+
+See `RELEASE.md` for the tag-based release checklist and verification steps.
 
 ## License
 

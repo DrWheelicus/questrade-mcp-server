@@ -1,0 +1,38 @@
+name: Question
+description: Ask a usage or integration question
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your question. Please include enough context so others can help quickly.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What are you trying to do?
+      placeholder: Describe your goal and where you are blocked.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Share relevant config, command, and MCP client details.
+      placeholder: |
+        MCP client:
+        Transport (stdio/http):
+        Config snippet:
+        Command run:
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you already tried
+      placeholder: List attempted solutions and outcomes.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or errors (optional)
+      description: Paste logs with secrets/tokens removed.
