@@ -1,6 +1,7 @@
 {
   "name": "questrade-mcp-server",
   "version": "0.1.0",
+  "private": true,
   "description": "MCP server for the Questrade trading API — portfolio, quotes, and market data for AI assistants",
   "type": "module",
   "engines": {
@@ -32,7 +33,7 @@
     "claude",
     "chatgpt"
   ],
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "dotenv": "^17.4.1",
