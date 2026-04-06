@@ -46,8 +46,15 @@ npm run build
 
 1. Open the [Questrade API Hub](https://www.questrade.com/api)
 2. Register a personal app (or reuse an existing one)
-3. Select **Generate new token for manual authorization**
-4. Copy the refresh token
+3. Enter a name for the device and a description
+4. Click **Create**
+5. Select **New device**
+6. Select **Generate new token**
+7. Copy the refresh token and paste it into the .env file
+
+> [!WARNING]
+> The refresh token is a secret and should not be shared.
+> If you lose it, you will need to generate a new one. (Steps 5-7)
 
 ### 3) Add Server to Your MCP Client
 
@@ -69,7 +76,7 @@ Use a config like this (replace with your local absolute path):
 
 Common locations:
 
-- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows)
+- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Local\Claude\claude_desktop_config.json` (Windows)
 - Claude Code: project `.mcp.json` or `~/.claude/mcp.json`
 - Cursor: Settings -> MCP Servers
 
