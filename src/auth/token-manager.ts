@@ -1,7 +1,7 @@
-import { getOAuthBaseUrl, type Config } from "../config.js";
-import { EncryptedStore } from "./encrypted-store.js";
-import { logger } from "../log.js";
-import type { PersistedTokens, TokenResponse } from "../types/questrade.js";
+import { getOAuthBaseUrl, type Config } from "@/config.js";
+import { EncryptedStore } from "@/auth/encrypted-store.js";
+import { logger } from "@/log.js";
+import type { PersistedTokens, TokenResponse } from "@/types/questrade.js";
 
 const REFRESH_BUFFER_MS = 2 * 60 * 1000; // Renew 2 min before expiry
 
@@ -27,14 +27,29 @@ export class TokenManager {
       return;
     }
 
-    const refreshToken = persisted?.refreshToken ?? this.config.refreshToken;
-    if (!refreshToken) {
+    const persistedToken = persisted?.refreshToken;
+    const envToken = this.config.refreshToken;
+
+    if (!persistedToken && !envToken) {
       throw new Error(
         "No refresh token available. Set QUESTRADE_REFRESH_TOKEN or run a previous session to cache tokens.",
       );
     }
 
-    await this.refresh(refreshToken);
+    if (persistedToken) {
+      try {
+        await this.refresh(persistedToken);
+        return;
+      } catch (err) {
+        logger.warn("Cached refresh token failed, clearing encrypted store");
+        await this.store.clear();
+
+        if (!envToken) throw err;
+        logger.info("Retrying with QUESTRADE_REFRESH_TOKEN from environment");
+      }
+    }
+
+    await this.refresh(envToken!);
   }
 
   async getAccessToken(): Promise<string> {
@@ -84,13 +99,34 @@ export class TokenManager {
   private async refresh(refreshToken: string): Promise<PersistedTokens> {
     logger.info("Refreshing Questrade OAuth tokens");
 
-    const url = `${this.oauthBaseUrl}/oauth2/token?grant_type=refresh_token&refresh_token=${encodeURIComponent(refreshToken)}`;
-
-    const response = await fetch(url, { method: "POST" });
+    // Questrade expects form body + Content-Type, not query params on an empty POST
+    const response = await fetch(`${this.oauthBaseUrl}/oauth2/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: refreshToken,
+      }),
+    });
 
     if (!response.ok) {
-      const body = await response.text().catch(() => "");
-      throw new Error(`Token refresh failed (${response.status}): ${body}`);
+      const rawBody = await response.text().catch(() => "");
+      const body = rawBody.trim() || "<empty response body>";
+      const bodyPreview = body.length > 400 ? `${body.slice(0, 400)}...` : body;
+      const diagnostics = [
+        `Token refresh failed (${response.status}${response.statusText ? ` ${response.statusText}` : ""})`,
+        `Questrade environment=${this.config.environment}`,
+        `OAuth host=${this.oauthBaseUrl}`,
+        `response=${bodyPreview}`,
+      ];
+
+      if (response.status === 400) {
+        diagnostics.push(
+          "Likely causes: refresh token is expired/revoked/invalid, the token was generated for a different environment (practice vs production), or the env value has extra whitespace/quotes.",
+        );
+      }
+
+      throw new Error(diagnostics.join(". "));
     }
 
     const data = (await response.json()) as TokenResponse;
