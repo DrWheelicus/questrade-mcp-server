@@ -1,0 +1,70 @@
+name: Label Sync
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/labels.yml"
+
+permissions:
+  issues: write
+
+jobs:
+  sync-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync repository labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [
+              {
+                name: "bug",
+                color: "d73a4a",
+                description: "Something is not working"
+              },
+              {
+                name: "enhancement",
+                color: "a2eeef",
+                description: "New feature or improvement"
+              },
+              {
+                name: "question",
+                color: "d876e3",
+                description: "Usage or clarification question"
+              }
+            ];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label.name
+                });
+
+                await github.rest.issues.updateLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label.name,
+                  new_name: label.name,
+                  color: label.color,
+                  description: label.description
+                });
+                core.info(`Updated label: ${label.name}`);
+              } catch (error) {
+                if (error.status === 404) {
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: label.name,
+                    color: label.color,
+                    description: label.description
+                  });
+                  core.info(`Created label: ${label.name}`);
+                } else {
+                  throw error;
+                }
+              }
+            }
