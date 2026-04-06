@@ -1,11 +1,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { QuestradeClient, QuestradeClientError } from "./client/questrade-client.js";
-import { TokenManager } from "./auth/token-manager.js";
-import { registerPortfolioTools } from "./tools/portfolio.js";
-import { registerMarketTools } from "./tools/market.js";
-import { registerOrderTools } from "./tools/orders.js";
-import { logger } from "./log.js";
-import type { Config } from "./config.js";
+import { QuestradeClient, QuestradeClientError } from "@/client/questrade-client.js";
+import { TokenManager } from "@/auth/token-manager.js";
+import { registerPortfolioTools } from "@/tools/portfolio.js";
+import { registerMarketTools } from "@/tools/market.js";
+import { registerOrderTools } from "@/tools/orders.js";
+import { logger } from "@/log.js";
+import type { Config } from "@/config.js";
 
 export interface ServerContext {
   server: McpServer;

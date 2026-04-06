@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { QuestradeClient } from "../client/questrade-client.js";
+import type { QuestradeClient } from "@/client/questrade-client.js";
 
 const orderStateFilters = [
   "All", "Open", "Filled", "Cancelled", "Expired", "Rejected", "Pending",

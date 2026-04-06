@@ -1,6 +1,6 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { logger } from "../log.js";
-import type { ServerContext } from "../server.js";
+import { logger } from "@/log.js";
+import type { ServerContext } from "@/server.js";
 
 export async function startStdio(ctx: ServerContext): Promise<void> {
   const transport = new StdioServerTransport();

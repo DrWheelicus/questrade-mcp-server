@@ -2,11 +2,11 @@
 
 import "dotenv/config";
 import { parseArgs } from "node:util";
-import { loadConfig } from "./config.js";
-import { createServer } from "./server.js";
-import { startStdio } from "./transports/stdio.js";
-import { startHttp } from "./transports/http.js";
-import { logger } from "./log.js";
+import { loadConfig } from "@/config.js";
+import { createServer } from "@/server.js";
+import { startStdio } from "@/transports/stdio.js";
+import { startHttp } from "@/transports/http.js";
+import { logger } from "@/log.js";
 
 async function main(): Promise<void> {
   const { values } = parseArgs({

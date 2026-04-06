@@ -1,8 +1,8 @@
 import { createCipheriv, createDecipheriv, randomBytes, pbkdf2Sync } from "node:crypto";
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir, hostname, userInfo } from "node:os";
-import type { PersistedTokens } from "../types/questrade.js";
+import type { PersistedTokens } from "@/types/questrade.js";
 
 const ALGORITHM = "aes-256-gcm";
 const KEY_LENGTH = 32;
@@ -47,7 +47,6 @@ export class EncryptedStore {
 
   async clear(): Promise<void> {
     try {
-      const { unlink } = await import("node:fs/promises");
       await unlink(this.filePath);
     } catch {
       // File may not exist

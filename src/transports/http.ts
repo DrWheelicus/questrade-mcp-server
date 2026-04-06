@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import express from "express";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { logger } from "../log.js";
-import type { ServerContext } from "../server.js";
+import { logger } from "@/log.js";
+import type { ServerContext } from "@/server.js";
 
 export async function startHttp(ctx: ServerContext, port: number): Promise<void> {
   const app = express();

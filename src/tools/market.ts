@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { QuestradeClient } from "../client/questrade-client.js";
-import type { CandleInterval } from "../types/questrade.js";
+import type { QuestradeClient } from "@/client/questrade-client.js";
+import type { CandleInterval } from "@/types/questrade.js";
 
 const candleIntervals: [CandleInterval, ...CandleInterval[]] = [
   "OneMinute", "TwoMinutes", "ThreeMinutes", "FourMinutes", "FiveMinutes",

@@ -1,6 +1,6 @@
-import type { TokenManager } from "../auth/token-manager.js";
-import { RateLimiter } from "./rate-limiter.js";
-import { logger } from "../log.js";
+import type { TokenManager } from "@/auth/token-manager.js";
+import { RateLimiter } from "@/client/rate-limiter.js";
+import { logger } from "@/log.js";
 import type {
   AccountsResponse,
   ActivitiesResponse,
@@ -14,7 +14,7 @@ import type {
   QuotesResponse,
   SymbolSearchResponse,
   SymbolsResponse,
-} from "../types/questrade.js";
+} from "@/types/questrade.js";
 
 export class QuestradeClientError extends Error {
   constructor(
