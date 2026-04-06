@@ -76,9 +76,13 @@ Use a config like this (replace with your local absolute path):
 
 Common locations:
 
-- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Local\Claude\claude_desktop_config.json` (Windows)
+- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows)
 - Claude Code: project `.mcp.json` or `~/.claude/mcp.json`
 - Cursor: Settings -> MCP Servers
+
+> [!NOTE]
+> On some Windows MSIX installs, Claude Desktop may read a virtualized config path instead:
+> `%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json`.
 
 ### 4) Verify
 
