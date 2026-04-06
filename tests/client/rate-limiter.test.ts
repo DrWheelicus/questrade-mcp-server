@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RateLimiter } from "../../src/client/rate-limiter.js";
+import { RateLimiter } from "@/client/rate-limiter.js";
 
 describe("RateLimiter", () => {
   it("allows requests up to the bucket capacity", async () => {

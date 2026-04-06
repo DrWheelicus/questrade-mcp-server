@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { registerPortfolioTools } from "../../src/tools/portfolio.js";
-import type { QuestradeClient } from "../../src/client/questrade-client.js";
+import { registerPortfolioTools } from "@/tools/portfolio.js";
+import type { QuestradeClient } from "@/client/questrade-client.js";
 
 function createMockClient(): QuestradeClient {
   return {

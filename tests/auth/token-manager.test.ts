@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { TokenManager } from "../../src/auth/token-manager.js";
-import type { Config } from "../../src/config.js";
+import { TokenManager } from "@/auth/token-manager.js";
+import type { Config } from "@/config.js";
 
-vi.mock("../../src/auth/encrypted-store.js", () => ({
+vi.mock("@/auth/encrypted-store.js", () => ({
   EncryptedStore: vi.fn().mockImplementation(() => ({
     load: vi.fn().mockResolvedValue(null),
     save: vi.fn().mockResolvedValue(undefined),

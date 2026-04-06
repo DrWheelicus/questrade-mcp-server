@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { QuestradeClient, QuestradeClientError } from "../../src/client/questrade-client.js";
-import type { TokenManager } from "../../src/auth/token-manager.js";
+import { QuestradeClient, QuestradeClientError } from "@/client/questrade-client.js";
+import type { TokenManager } from "@/auth/token-manager.js";
 
 function createMockTokenManager(overrides?: Partial<TokenManager>): TokenManager {
   return {
