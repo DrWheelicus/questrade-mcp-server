@@ -1,10 +1,16 @@
-/** Logs to stderr so stdio transport JSON on stdout is never polluted. */
-export function log(level: "info" | "warn" | "error", message: string, meta?: Record<string, unknown>): void {
-  const entry = {
-    ts: new Date().toISOString(),
-    level,
-    msg: message,
-    ...meta,
-  };
-  process.stderr.write(JSON.stringify(entry) + "\n");
+import pino from "pino";
+
+const pretty = !!process.env["LOG_PRETTY"];
+
+/** Writes to stderr so stdio transport JSON on stdout is never polluted. */
+export const logger = pino({
+  name: "questrade-mcp-server",
+  level: process.env["LOG_LEVEL"] ?? "info",
+  ...(pretty
+    ? { transport: { target: "pino-pretty", options: { destination: 2 } } }
+    : {}),
+}, pretty ? undefined : pino.destination({ dest: 2, sync: true }));
+
+export function createChildLogger(bindings: Record<string, unknown>): pino.Logger {
+  return logger.child(bindings);
 }

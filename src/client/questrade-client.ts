@@ -1,6 +1,6 @@
 import type { TokenManager } from "../auth/token-manager.js";
 import { RateLimiter } from "./rate-limiter.js";
-import { log } from "../log.js";
+import { logger } from "../log.js";
 import type {
   AccountsResponse,
   ActivitiesResponse,
@@ -89,14 +89,14 @@ export class QuestradeClient {
     const token = await this.tokenManager.getAccessToken();
     const url = `${baseUrl}v1${path.startsWith("/v1") ? path.slice(3) : path}`;
 
-    log("info", `GET ${path}`);
+    logger.info({ path }, "GET %s", path);
 
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     if (response.status === 401 && !retried) {
-      log("warn", "Received 401, refreshing token and retrying");
+      logger.warn("Received 401, refreshing token and retrying");
       await this.tokenManager.refreshCurrent();
       return this.get<T>(path, true);
     }

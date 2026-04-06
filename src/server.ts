@@ -4,7 +4,7 @@ import { TokenManager } from "./auth/token-manager.js";
 import { registerPortfolioTools } from "./tools/portfolio.js";
 import { registerMarketTools } from "./tools/market.js";
 import { registerOrderTools } from "./tools/orders.js";
-import { log } from "./log.js";
+import { logger } from "./log.js";
 import type { Config } from "./config.js";
 
 export interface ServerContext {
@@ -36,7 +36,7 @@ export async function createServer(config: Config): Promise<ServerContext> {
   registerMarketTools(server, client);
   registerOrderTools(server, client);
 
-  log("info", "MCP server created with all tools registered");
+  logger.info("MCP server created with all tools registered");
 
   return { server, tokenManager };
 }
@@ -58,7 +58,7 @@ function wrapToolErrorHandling(server: McpServer): void {
           return await (handler as (...a: unknown[]) => Promise<unknown>)(...handlerArgs);
         } catch (err) {
           const message = formatError(err);
-          log("error", "Tool error", { error: message });
+          logger.error({ error: message }, "Tool error");
           return {
             content: [{ type: "text" as const, text: message }],
             isError: true,

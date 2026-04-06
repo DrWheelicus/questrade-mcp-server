@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
+import "dotenv/config";
 import { parseArgs } from "node:util";
 import { loadConfig } from "./config.js";
 import { createServer } from "./server.js";
 import { startStdio } from "./transports/stdio.js";
 import { startHttp } from "./transports/http.js";
-import { log } from "./log.js";
+import { logger } from "./log.js";
 
 async function main(): Promise<void> {
   const { values } = parseArgs({
@@ -18,7 +19,7 @@ async function main(): Promise<void> {
   const config = loadConfig();
   const transport = (values.transport as string | undefined) ?? config.transport;
 
-  log("info", `Starting questrade-mcp-server (transport=${transport})`);
+  logger.info("Starting questrade-mcp-server (transport=%s)", transport);
 
   const ctx = await createServer(config);
 
@@ -35,6 +36,6 @@ async function main(): Promise<void> {
 }
 
 main().catch((err) => {
-  log("error", "Fatal startup error", { error: String(err) });
+  logger.error({ err }, "Fatal startup error");
   process.exit(1);
 });

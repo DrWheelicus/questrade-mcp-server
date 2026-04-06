@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import express from "express";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { log } from "../log.js";
+import { logger } from "../log.js";
 import type { ServerContext } from "../server.js";
 
 export async function startHttp(ctx: ServerContext, port: number): Promise<void> {
@@ -43,7 +43,7 @@ export async function startHttp(ctx: ServerContext, port: number): Promise<void>
       sessionIdGenerator: () => randomUUID(),
       onsessioninitialized: (id) => {
         transports.set(id, transport);
-        log("info", "HTTP session created", { sessionId: id });
+        logger.info({ sessionId: id }, "HTTP session created");
       },
     });
 
@@ -51,7 +51,7 @@ export async function startHttp(ctx: ServerContext, port: number): Promise<void>
       const id = [...transports.entries()].find(([, t]) => t === transport)?.[0];
       if (id) {
         transports.delete(id);
-        log("info", "HTTP session closed", { sessionId: id });
+        logger.info({ sessionId: id }, "HTTP session closed");
       }
     };
 
@@ -64,11 +64,11 @@ export async function startHttp(ctx: ServerContext, port: number): Promise<void>
   });
 
   const server = app.listen(port, () => {
-    log("info", `MCP server running on Streamable HTTP transport at http://localhost:${port}/mcp`);
+    logger.info("MCP server running on Streamable HTTP transport at http://localhost:%d/mcp", port);
   });
 
   const shutdown = () => {
-    log("info", "Shutting down HTTP transport");
+    logger.info("Shutting down HTTP transport");
     ctx.tokenManager.destroy();
     for (const transport of transports.values()) {
       transport.close().catch(() => {});

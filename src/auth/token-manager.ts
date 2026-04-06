@@ -1,6 +1,6 @@
 import { getOAuthBaseUrl, type Config } from "../config.js";
 import { EncryptedStore } from "./encrypted-store.js";
-import { log } from "../log.js";
+import { logger } from "../log.js";
 import type { PersistedTokens, TokenResponse } from "../types/questrade.js";
 
 const REFRESH_BUFFER_MS = 2 * 60 * 1000; // Renew 2 min before expiry
@@ -22,7 +22,7 @@ export class TokenManager {
 
     if (persisted && persisted.expiresAt > Date.now()) {
       this.tokens = persisted;
-      log("info", "Loaded cached tokens from encrypted store");
+      logger.info("Loaded cached tokens from encrypted store");
       this.scheduleRenewal();
       return;
     }
@@ -82,7 +82,7 @@ export class TokenManager {
   }
 
   private async refresh(refreshToken: string): Promise<PersistedTokens> {
-    log("info", "Refreshing Questrade OAuth tokens");
+    logger.info("Refreshing Questrade OAuth tokens");
 
     const url = `${this.oauthBaseUrl}/oauth2/token?grant_type=refresh_token&refresh_token=${encodeURIComponent(refreshToken)}`;
 
@@ -104,7 +104,7 @@ export class TokenManager {
 
     this.tokens = tokens;
     await this.store.save(tokens);
-    log("info", "Tokens refreshed and persisted", { apiServer: tokens.apiServer });
+    logger.info({ apiServer: tokens.apiServer }, "Tokens refreshed and persisted");
 
     this.scheduleRenewal();
     return tokens;
@@ -120,7 +120,7 @@ export class TokenManager {
     const delay = Math.max(0, this.tokens.expiresAt - Date.now() - REFRESH_BUFFER_MS);
     this.renewalTimer = setTimeout(() => {
       this.refreshCurrent().catch((err) => {
-        log("error", "Proactive token renewal failed", { error: String(err) });
+        logger.error({ err }, "Proactive token renewal failed");
       });
     }, delay);
 
