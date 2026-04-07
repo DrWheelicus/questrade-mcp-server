@@ -33,6 +33,16 @@ jobs:
                 name: "question",
                 color: "d876e3",
                 description: "Usage or clarification question"
+              },
+              {
+                name: "autorelease: pending",
+                color: "ededed",
+                description: "Release Please: release pending"
+              },
+              {
+                name: "autorelease: tagged",
+                color: "ededed",
+                description: "Release Please: release tagged"
               }
             ];
 
