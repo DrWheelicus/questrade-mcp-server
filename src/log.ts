@@ -10,7 +10,3 @@ export const logger = pino({
     ? { transport: { target: "pino-pretty", options: { destination: 2 } } }
     : {}),
 }, pretty ? undefined : pino.destination({ dest: 2, sync: true }));
-
-export function createChildLogger(bindings: Record<string, unknown>): pino.Logger {
-  return logger.child(bindings);
-}

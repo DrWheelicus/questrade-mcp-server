@@ -36,8 +36,8 @@ with fewer round-trips.
 ### 1) Clone, Install, Build
 
 ```bash
-git clone <your-repo-url>
-cd Questrade
+git clone https://github.com/DrWheelicus/questrade-mcp-server.git
+cd questrade-mcp-server
 npm install
 npm run build
 ```
