@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - ".github/workflows/labels.yml"
+      - ".github/workflows/label-sync.yml"
 
 permissions:
   issues: write
