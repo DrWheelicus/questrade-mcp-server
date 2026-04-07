@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/DrWheelicus/questrade-mcp-server/compare/v0.3.0...v0.3.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* **docker:** skip prepare hook during Docker build npm ci ([#11](https://github.com/DrWheelicus/questrade-mcp-server/issues/11)) ([c742412](https://github.com/DrWheelicus/questrade-mcp-server/commit/c7424123bdfd2c381e6e45b504d605a7010343fc))
+
 ## [0.3.0](https://github.com/DrWheelicus/questrade-mcp-server/compare/v0.2.0...v0.3.0) (2026-04-07)
 
 
