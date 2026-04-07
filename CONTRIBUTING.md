@@ -42,13 +42,37 @@ npm run build
 4. Open a PR using the provided template.
 5. Respond to review feedback and update your PR.
 
-## Commit Message Suggestions
+## Commit Messages
 
-Use concise, intent-focused commit messages, for example:
+All commits and PR titles **must** follow the
+[Conventional Commits](https://www.conventionalcommits.org/) specification.
+This is enforced automatically in CI.
+
+### Format
+
+```
+type(optional-scope): short description
+```
+
+### Allowed types
+
+`feat` · `fix` · `docs` · `style` · `refactor` · `perf` · `test` · `build` · `ci` · `chore` · `revert`
+
+### Examples
 
 - `fix: handle empty quote responses`
 - `feat: add account activity filters`
 - `docs: clarify HTTP transport setup`
+- `refactor(auth): simplify token refresh flow`
+
+### What gets checked
+
+| Check | Scope | Trigger |
+|-------|-------|---------|
+| **PR title** (semantic-pull-request) | PR title only | PR opened / edited / reopened |
+| **Commit messages** (commitlint) | Every commit in the PR | Push / PR to `main` |
+
+Both checks must pass before a PR can be merged.
 
 ## Reporting Security Issues
 
