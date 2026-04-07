@@ -6,7 +6,7 @@ import type { ServerContext } from "@/server.js";
 
 export async function startHttp(ctx: ServerContext, port: number): Promise<void> {
   const app = express();
-  app.use(express.json());
+  app.use(express.json({ limit: "1mb" }));
 
   const transports = new Map<string, StreamableHTTPServerTransport>();
 
@@ -63,8 +63,8 @@ export async function startHttp(ctx: ServerContext, port: number): Promise<void>
     res.json({ status: "ok", sessions: transports.size });
   });
 
-  const server = app.listen(port, () => {
-    logger.info("MCP server running on Streamable HTTP transport at http://localhost:%d/mcp", port);
+  const server = app.listen(port, "127.0.0.1", () => {
+    logger.info("MCP server running on Streamable HTTP transport at http://127.0.0.1:%d/mcp", port);
   });
 
   const shutdown = () => {

@@ -4,3 +4,4 @@ dist/
 *.enc
 coverage/
 *.tsbuildinfo
+github-rulesets/

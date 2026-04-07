@@ -358,11 +358,6 @@ export interface ExecutionsResponse {
 
 // ── API Errors ──
 
-export interface QuestradeApiError {
-  code: number;
-  message: string;
-}
-
 export interface QuestradeErrorResponse {
   code: number;
   message: string;

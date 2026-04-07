@@ -1,7 +1,16 @@
+import { z } from "zod";
 import { getOAuthBaseUrl, type Config } from "@/config.js";
 import { EncryptedStore } from "@/auth/encrypted-store.js";
 import { logger } from "@/log.js";
-import type { PersistedTokens, TokenResponse } from "@/types/questrade.js";
+import type { PersistedTokens } from "@/types/questrade.js";
+
+const tokenResponseSchema = z.object({
+  access_token: z.string(),
+  api_server: z.string().url(),
+  expires_in: z.number().positive(),
+  refresh_token: z.string(),
+  token_type: z.string(),
+});
 
 const REFRESH_BUFFER_MS = 2 * 60 * 1000; // Renew 2 min before expiry
 
@@ -128,7 +137,7 @@ export class TokenManager {
       throw new Error(diagnostics.join(". "));
     }
 
-    const data = (await response.json()) as TokenResponse;
+    const data = tokenResponseSchema.parse(await response.json());
 
     const tokens: PersistedTokens = {
       accessToken: data.access_token,
