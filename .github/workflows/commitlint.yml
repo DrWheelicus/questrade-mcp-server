@@ -1,4 +1,4 @@
-name: Commitlint
+name: Commit Lint
 
 on:
   push:
@@ -6,11 +6,15 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
 jobs:
-  commitlint:
+  lint-commits:
     name: Lint commit messages
     runs-on: ubuntu-latest
     steps:
