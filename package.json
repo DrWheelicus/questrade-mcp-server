@@ -1,6 +1,6 @@
 {
   "name": "questrade-mcp-server",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "description": "MCP server for the Questrade trading API — portfolio, quotes, and market data for AI assistants",
   "type": "module",

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/DrWheelicus/questrade-mcp-server/compare/v0.3.1...v0.3.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* **auth:** specify authTagLength for GCM decryption ([#17](https://github.com/DrWheelicus/questrade-mcp-server/issues/17)) ([33c1918](https://github.com/DrWheelicus/questrade-mcp-server/commit/33c1918362bf185fad3e26ab810961552e55cd01))
+
 ## [0.3.1](https://github.com/DrWheelicus/questrade-mcp-server/compare/v0.3.0...v0.3.1) (2026-04-07)
 
 
