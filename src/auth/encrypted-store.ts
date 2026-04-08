@@ -69,7 +69,7 @@ export class EncryptedStore {
     const iv = Buffer.from(payload.iv, "base64");
     const authTag = Buffer.from(payload.authTag, "base64");
     const ciphertext = Buffer.from(payload.ciphertext, "base64");
-    const decipher = createDecipheriv(ALGORITHM, this.keyBuffer, iv);
+    const decipher = createDecipheriv(ALGORITHM, this.keyBuffer, iv, { authTagLength: 16 });
     decipher.setAuthTag(authTag);
     return Buffer.concat([decipher.update(ciphertext), decipher.final()]).toString("utf-8");
   }
