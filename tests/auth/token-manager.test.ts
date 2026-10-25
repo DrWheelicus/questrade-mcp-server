@@ -3,11 +3,12 @@ import { TokenManager } from "@/auth/token-manager.js";
 import type { Config } from "@/config.js";
 
 vi.mock("@/auth/encrypted-store.js", () => ({
-  EncryptedStore: vi.fn().mockImplementation(() => ({
-    load: vi.fn().mockResolvedValue(null),
-    save: vi.fn().mockResolvedValue(undefined),
-    clear: vi.fn().mockResolvedValue(undefined),
-  })),
+  // Vitest 4 only allows `new` on mocks implemented with a function or class.
+  EncryptedStore: class {
+    load = vi.fn().mockResolvedValue(null);
+    save = vi.fn().mockResolvedValue(undefined);
+    clear = vi.fn().mockResolvedValue(undefined);
+  },
 }));
 
 const MOCK_TOKEN_RESPONSE = {
